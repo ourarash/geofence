@@ -1,4 +1,4 @@
-var defines = require("./defines");
+var defines = require("../defines");
 //-----------------------------------------------------------------------------
 /**
  * A function that mocks the current location
@@ -33,9 +33,10 @@ let options = {
 };
 
 let locationSepc = {
-  destination: "Oakland, CA"
+  destination: "Oakland, CA",
+  mode: "driving"
 };
 //-----------------------------------------------------------------------------
-var geofence = require("./index.js")(options, locationSepc);
+var geofence = require("../index.js")(options, locationSepc);
 
 geofence.start(options);

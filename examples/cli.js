@@ -1,7 +1,7 @@
 /**
  * Gets API key from command line
  */
-var defines = require("./defines");
+var defines = require("../defines");
 const mri = require('mri');
  
 log = defines.log;
@@ -46,11 +46,14 @@ let locationSepc = {
 const argv = process.argv.slice(2);
 let cliArgs = mri(argv);
 
-if(cliArgs.apiKey){
-  options.apiKey = cliArgs.apiKey;
-  log.info(`apiKey: ${options.apiKey}`);
-}
+[`apiKey`, `updateInterval`, `loopForever`, `destination`].forEach(e=>{
+  if(cliArgs[e]){
+    options[e] = cliArgs[e];
+    log.info(`${e}: ${options[e]}`);
+  }
+});
 
-var geofence = require("./index.js")(options, locationSepc);
+
+var geofence = require("../index.js")(options, locationSepc);
 
 geofence.start(options);
