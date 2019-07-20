@@ -76,21 +76,7 @@ async function updateDistance() {
 
   }
   
-  // Call updateDistanceResults
-  if (defines.Globals.options.updateDistanceCallBack) {
-    let updateDistanceResults={
-      curAddress: result.origin_address,
-      destAddress: result.destination_address,
-      mode: defines.Globals.locationSpecs.mode,
-      curDistance: result.distance.distance,
-      curDuration: result.distance.duration,
-      activateFenceOn:defines.Globals.options.activateFenceOn,
-      fenceDurationValue:defines.Globals.options.fenceDurationValue,
-      fenceDistanceValue:defines.Globals.options.fenceDistanceValue,
-      apiCalls: defines.Globals.counters.apiCalls
-    }
-    defines.Globals.options.updateDistanceCallBack(updateDistanceResults);
-  }
+  
 
   log.info("Cur address:", result.origin_address);
   log.info("Dest address:", result.destination_address);
@@ -126,6 +112,24 @@ async function updateDistance() {
       }`
     );
     insideFence = true;
+  }
+
+
+  // Call updateDistanceResults
+  if (defines.Globals.options.updateDistanceCallBack) {
+    let updateDistanceResults={
+      curAddress: result.origin_address,
+      destAddress: result.destination_address,
+      mode: defines.Globals.locationSpecs.mode,
+      curDistance: result.distance.distance,
+      curDuration: result.distance.duration,
+      activateFenceOn:defines.Globals.options.activateFenceOn,
+      fenceDurationValue:defines.Globals.options.fenceDurationValue,
+      fenceDistanceValue:defines.Globals.options.fenceDistanceValue,
+      apiCalls: defines.Globals.counters.apiCalls,
+      insideFence: insideFence
+    }
+    defines.Globals.options.updateDistanceCallBack(updateDistanceResults);
   }
 
   if (insideFence) {

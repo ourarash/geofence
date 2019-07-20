@@ -1,6 +1,6 @@
 /**
  * Should be run inside [Termux](https://termux.com/) in Android using GPS
- * First install the following apps: 
+ * First install the following apps:
  *  - https://play.google.com/store/apps/details?id=com.termux
  *  - https://play.google.com/store/apps/details?id=com.termux.api
  */
@@ -53,13 +53,15 @@ async function insideGeofenceCallBack() {
 async function updateDistanceCallBack(updateDistanceResults) {
   let notificationTitle = `
   curDistance: ${updateDistanceResults.curDistance.text},
-  curDuration: ${updateDistanceResults.curDuration.text}`;
+  curDuration: ${updateDistanceResults.curDuration.text},
+  insideFence: ${insideFence}`;
 
-  let notificationText = `Activate on:
+  let notificationText = `Activates on:
   ${updateDistanceResults.activateFenceOn},
   duration:${updateDistanceResults.fenceDurationValue},
   distance:${updateDistanceResults.fenceDistanceValue}
   `;
+
   api
     .notification()
     .content(notificationText)
