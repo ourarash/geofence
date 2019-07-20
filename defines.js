@@ -35,7 +35,7 @@ var Globals = {
     mode: "driving"
   },
   counters:{
-    apiCallCaounter: 0
+    apiCalls: 0
   }
 };
 

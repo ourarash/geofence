@@ -2,7 +2,7 @@
   "name": "geofence",
   "version": "1.0.0",
   "description": "Geofencing for npm",
-  "main": "test.js",
+  "main": "test_api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
