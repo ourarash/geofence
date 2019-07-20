@@ -25,15 +25,7 @@ async function getCurrentLocation() {
     .request("last") // updates/last/once (default)
     .run();
 
-  log.info("current location result: ", JSON.stringify(result, null, 2));
-
-  // let reverse = await geocoder.reverse({lat:result.latitude, lon:result.longitude})
-  // .catch(function(err) {
-  //   log.info(err);
-  // });
-
-  // log.info('reverse: ', JSON.stringify(reverse, null, 2));
-  // log.info('reverse[0].formattedAddress: ', JSON.stringify(reverse[0].formattedAddress));
+  // log.info("current location result: ", JSON.stringify(result, null, 2));
 
   return `${result.latitude},${result.longitude}`;
 }
