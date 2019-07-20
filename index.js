@@ -82,7 +82,10 @@ async function updateDistance() {
       destAddress: result.destination_address,
       mode: defines.Globals.locationSpecs.mode,
       curDistance: result.distance.distance,
-      curDuration: result.distance.duration
+      curDuration: result.distance.duration,
+      activateFenceOn:defines.Globals.options.activateFenceOn,
+      fenceDurationValue:defines.Globals.options.fenceDurationValue,
+      fenceDistanceValue:defines.Globals.options.fenceDistanceValue,
     }
     defines.Globals.options.updateDistanceCallBack(updateDistanceResults);
   }
