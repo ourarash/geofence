@@ -27,6 +27,7 @@ async function getDistance(origin, destination, mode) {
       origin_address: response.json.origin_addresses[0],
       destination_address: response.json.destination_addresses[0]
     };
+    defines.Globals.counters.apiCalls++;
   } catch (error) {
     log.error("Error: ", error);
   }
@@ -55,7 +56,7 @@ async function updateDistance() {
     ) {
       // Usae cache
       result = defines.cache.distance[curLocation].value;
-      log.info("Used cache!");
+      log.info("Used cache!".green);
     } else {
       // Call google API
       result = await getDistance(
@@ -86,6 +87,7 @@ async function updateDistance() {
       activateFenceOn:defines.Globals.options.activateFenceOn,
       fenceDurationValue:defines.Globals.options.fenceDurationValue,
       fenceDistanceValue:defines.Globals.options.fenceDistanceValue,
+      apiCalls: defines.Globals.counters.apiCalls
     }
     defines.Globals.options.updateDistanceCallBack(updateDistanceResults);
   }
@@ -95,6 +97,7 @@ async function updateDistance() {
   log.info("Mode: ", defines.Globals.locationSpecs.mode);
   log.info("cur distance: ", JSON.stringify(result.distance.distance.text));
   log.info("cur duration: ", JSON.stringify(result.distance.duration.text));
+  log.info("apiCalls: ", defines.Globals.counters.apiCalls);
 
   let insideFence = false;
   if (

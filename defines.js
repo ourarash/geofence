@@ -33,6 +33,9 @@ var Globals = {
     origin: "41.43206,-81.38992",
     destination: "san francisco, ca",
     mode: "driving"
+  },
+  counters:{
+    apiCallCaounter: 0
   }
 };
 
