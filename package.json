@@ -1,6 +1,6 @@
 {
   "name": "geofence",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Geofencing for npm",
   "main": "index.js",
   "scripts": {

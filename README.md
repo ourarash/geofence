@@ -30,20 +30,22 @@ let options = {
 
   // API function to get the current location.
   // It should return a string that is an address or lat/long
+  // See Google's Distance Matrix API:
+  // https://developers.google.com/maps/documentation/distance-matrix/intro
   getCurrentLocation: getCurrentLocation,
 
-  // Callback for when we are inside the fence
+  // Callback for when we are inside the fence (optional)
   insideGeofenceCallBack: insideGeofenceCallBack,
 
-  // Callback function to be called whenever the current location and distance is updated
-  updateDistanceCallBack: updateDistanceCallBack
+  // Callback function to be called whenever the 
+  // current location and distance is updated (optional)
+  updateDistanceCallBack: updateDistanceCallBack,
 
   loopForever: false,  // Stop/continue once we are inside the fence
 
-  activateFenceOn: "duration", // 'duration', 'distance', 'either'
+  activateFenceOn: "duration", // 'duration' OR 'distance' OR 'either'
   fenceDurationValue: 25 * 60, // range of the fence in seconds
-  fenceDistanceValue: 1000, // range of the fence in meter
-
+  fenceDistanceValue: 1000, // range of the fence in meters
 };
 
 let locationSepc = {
@@ -58,8 +60,8 @@ geofence.start(options);
 
 # Examples
 
-- [examples/example.js](examples/example.js)
-- [examples/cli.js](examples/cli.js) to run with command line arguments:
+- [examples/example.js](examples/example.js): Simple example
+- [examples/cli.js](examples/cli.js): demonstrates running with command line arguments:
   - `node cli.js --apiKey=YOUR_API_KEY --destination="San Francisco, CA"`
-- [examples/termux.js](examples/termux.js) to run inside [Termux](https://termux.com/) on Android using GPS. Run with:
+- [examples/termux.js](examples/termux.js): demonstrates running inside [Termux](https://termux.com/) and [Termux-API](https://play.google.com/store/apps/details?id=com.termux.api) on Android using device GPS and system notifications. Run with:
   - `node termux.js --apiKey=YOUR_API_KEY --destination="320 Main St, Venice, CA" --fenceDurationValue=5 --updateInterval=10`
