@@ -57,9 +57,11 @@ async function insideGeofenceCallBack() {
  * @param {Objecgt} updateDistanceResults
  */
 async function updateDistanceCallBack(updateDistanceResults) {
-  let notificationText = `
+  let notificationTitle = `
   curDistance: ${updateDistanceResults.curDistance.text},
-  curDuration: ${updateDistanceResults.curDuration.text}\n
+  curDuration: ${updateDistanceResults.curDuration.text}`;
+
+  let notificationText = `
   activateFenceOn:${updateDistanceResults.activateFenceOn},
   fenceDurationValue:${updateDistanceResults.fenceDurationValue},
   fenceDistanceValue:${updateDistanceResults.fenceDistanceValue}
@@ -68,7 +70,7 @@ async function updateDistanceCallBack(updateDistanceResults) {
     .notification()
     .content(notificationText)
     .id(1)
-    .title("Geofencing")
+    .title(notificationTitle)
     //  .url('...')
     .run();
 }
