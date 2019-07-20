@@ -61,10 +61,10 @@ async function updateDistanceCallBack(updateDistanceResults) {
   curDistance: ${updateDistanceResults.curDistance.text},
   curDuration: ${updateDistanceResults.curDuration.text}`;
 
-  let notificationText = `
-  activateFenceOn:${updateDistanceResults.activateFenceOn},
-  fenceDurationValue:${updateDistanceResults.fenceDurationValue},
-  fenceDistanceValue:${updateDistanceResults.fenceDistanceValue}
+  let notificationText = `Activate on:
+  ${updateDistanceResults.activateFenceOn},
+  duration:${updateDistanceResults.fenceDurationValue},
+  distance:${updateDistanceResults.fenceDistanceValue}
   `;
   api
     .notification()
