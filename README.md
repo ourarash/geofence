@@ -61,7 +61,7 @@ let locationSepc = {
   mode: "driving" //
 };
 //-----------------------------------------------------------------------------
-var geofence = require("./index.js")(options, locationSepc);
+var geofence = require("geofence")(options, locationSepc);
 
 geofence.start(options);
 ```
