@@ -1,13 +1,15 @@
 /**
- * Gets API key from command line
+ * Should be run inside [Termux](https://termux.com/) in Android
+ * First install the following apps: 
+ *  - https://play.google.com/store/apps/details?id=com.termux
+ *  - https://play.google.com/store/apps/details?id=com.termux.api
  */
+
 var defines = require("../defines");
 const mri = require("mri");
 const api = require("termux");
-// const NodeGeocoder = require("node-geocoder");
 
 var log = defines.log;
-// var geocoder ;
 
 if (!api.hasTermux) {
   log.error("Termux doesn't exits. Exit!");
@@ -107,8 +109,6 @@ let cliArgs = mri(argv);
     log.info(`${e}: ${locationSepc[e]}`);
   }
 });
-
-// geocoder = NodeGeocoder(options);
 
 var geofence = require("../index.js")(options, locationSepc);
 

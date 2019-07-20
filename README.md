@@ -58,6 +58,7 @@ geofence.start(options);
 
 # Example
 
-- See [examples/example.js](examples/example.js)
-- See [examples/cli.js](examples/cli.js) to run with command line arguments:
+- [examples/example.js](examples/example.js)
+- [examples/cli.js](examples/cli.js) to run with command line arguments:
   - `node cli.js --apiKey=YOUR_API_KEY --destination="San Francisco, CA"`
+- [examples/termux.js](examples/termux.js) to run inside [Termux](https://termux.com/) on Android
