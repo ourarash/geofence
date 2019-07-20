@@ -54,7 +54,7 @@ async function updateDistanceCallBack(updateDistanceResults) {
   let notificationTitle = `
   curDistance: ${updateDistanceResults.curDistance.text},
   curDuration: ${updateDistanceResults.curDuration.text},
-  insideFence: ${insideFence}`;
+  insideFence: ${updateDistanceResults.insideFence}`;
 
   let notificationText = `Activates on:
   ${updateDistanceResults.activateFenceOn},
