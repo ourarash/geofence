@@ -1,4 +1,3 @@
-var defines = require("../defines");
 //-----------------------------------------------------------------------------
 /**
  * A function that mocks the current location

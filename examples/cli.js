@@ -2,8 +2,8 @@
  * Gets API key from command line
  */
 var defines = require("../defines");
-const mri = require('mri');
- 
+const mri = require("mri");
+
 log = defines.log;
 //-----------------------------------------------------------------------------
 /**
@@ -14,7 +14,11 @@ async function getCurrentLocation() {
   let items = [
     "Hayward, CA",
     "San Jose, CA",
+    "Berkely, CA",
+    "Cupertino, CA",
     "41.43206,-81.38992",
+    "Sunnyvale, CA",
+    "Mountain View, CA",
     "San Francisco, CA"
   ];
 
@@ -22,12 +26,12 @@ async function getCurrentLocation() {
   var item = items[Math.floor(Math.random() * items.length)];
   return item;
 }
-//----------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------
 /**
  * Our callback function once we get inside the fence
  */
-function insideGeofenceCallBack(){
-  console.log("WE ARE INSIDE THE FENCE!");
+function insideGeofenceCallBack() {
+  log.info("WE ARE INSIDE THE FENCE!".green);
 }
 //-----------------------------------------------------------------------------
 let options = {
@@ -39,20 +43,38 @@ let options = {
 };
 
 let locationSepc = {
-  destination: "Oakland, CA"
+  destination: "Sacramento, CA"
 };
 //-----------------------------------------------------------------------------
 
 const argv = process.argv.slice(2);
 let cliArgs = mri(argv);
-
-[`apiKey`, `updateInterval`, `loopForever`, `destination`].forEach(e=>{
-  if(cliArgs[e]){
+log.info(
+  "-----------------------------------------------------------------------------"
+);
+// Setting options based on command line arguments
+[
+  `apiKey`,
+  `updateInterval`,
+  `loopForever`,
+  `fenceDurationValue`,
+  `fenceDistanceValue`
+].forEach(e => {
+  if (cliArgs[e]) {
     options[e] = cliArgs[e];
-    log.info(`${e}: ${options[e]}`);
+    if (e !== `apiKey`) {
+      log.info(`${e}: ${options[e]}`);
+    }
   }
 });
 
+// Setting locationSepc based on command line arguments
+[`destination`, `mode`, `origin`].forEach(e => {
+  if (cliArgs[e]) {
+    locationSepc[e] = cliArgs[e];
+    log.info(`${e}: ${locationSepc[e]}`);
+  }
+});
 
 var geofence = require("../index.js")(options, locationSepc);
 

@@ -77,72 +77,76 @@ async function updateDistance() {
   }
   
   
-
-  log.info("Cur address:", result.origin_address);
-  log.info("Dest address:", result.destination_address);
-  log.info("Mode: ", defines.Globals.locationSpecs.mode);
-  log.info("cur distance: ", JSON.stringify(result.distance.distance.text));
-  log.info("cur duration: ", JSON.stringify(result.distance.duration.text));
-  log.info("apiCalls: ", defines.Globals.counters.apiCalls);
-
-  let insideFence = false;
-  if (
-    result.distance.duration &&
-    ["duration", "both", "either"].includes(defines.Globals.options.activateFenceOn) &&
-    result.distance.duration.value <= defines.Globals.options.fenceDurationValue
-  ) {
-    log.info(
-      "Inside the fence based on duration: ",
-      `${result.distance.duration.value} <= ${
-        defines.Globals.options.fenceDurationValue
-      }`
-    );
-    insideFence = true;
-  }
-
-  if (
-    result.distance.distance &&
-    ["distance", "both", "either"].includes(defines.Globals.options.activateFenceOn) &&
-    result.distance.distance.value <= defines.Globals.options.fenceDistanceValue
-  ) {
-    log.info(
-      "Inside fence based on distance: ",
-      `${result.distance.distance.value} <= ${
-        defines.Globals.options.fenceDistanceValue
-      }`
-    );
-    insideFence = true;
-  }
-
-
-  // Call updateDistanceResults
-  if (defines.Globals.options.updateDistanceCallBack) {
-    let updateDistanceResults={
-      curAddress: result.origin_address,
-      destAddress: result.destination_address,
-      mode: defines.Globals.locationSpecs.mode,
-      curDistance: result.distance.distance,
-      curDuration: result.distance.duration,
-      activateFenceOn:defines.Globals.options.activateFenceOn,
-      fenceDurationValue:defines.Globals.options.fenceDurationValue,
-      fenceDistanceValue:defines.Globals.options.fenceDistanceValue,
-      apiCalls: defines.Globals.counters.apiCalls,
-      insideFence: insideFence
-    }
-    defines.Globals.options.updateDistanceCallBack(updateDistanceResults);
-  }
-
-  if (insideFence) {
-    log.info("We are inside the fence!".green);
-    if (defines.Globals.options.insideGeofenceCallBack) {
-      defines.Globals.options.insideGeofenceCallBack();
-    }
-    if (!defines.Globals.options.loopForever) {
-      stop("Ending geofencing.");
-    }
+  if(!result.distance.distance){
+    log.error("Distance was not found: ", `curLocation: ${curLocation}`);
   } else {
-    log.info("We are NOT inside the fence!".red);
+    log.info("Cur address:", result.origin_address.blue);
+    log.info("Dest address:", result.destination_address.yellow);
+    log.info("Mode: ", defines.Globals.locationSpecs.mode);
+    log.info("cur distance: ", JSON.stringify(result.distance.distance.text));
+    log.info("cur duration: ", JSON.stringify(result.distance.duration.text));
+    log.info("apiCalls: ", defines.Globals.counters.apiCalls);
+  
+    let insideFence = false;
+    if (
+      result.distance.duration &&
+      ["duration", "both", "either"].includes(defines.Globals.options.activateFenceOn) &&
+      result.distance.duration.value <= defines.Globals.options.fenceDurationValue
+    ) {
+      log.info(
+        "Inside the fence based on duration: ",
+        `${result.distance.duration.value} <= ${
+          defines.Globals.options.fenceDurationValue
+        }`
+      );
+      insideFence = true;
+    }
+  
+    if (
+      result.distance.distance &&
+      ["distance", "both", "either"].includes(defines.Globals.options.activateFenceOn) &&
+      result.distance.distance.value <= defines.Globals.options.fenceDistanceValue
+    ) {
+      log.info(
+        "Inside fence based on distance: ",
+        `${result.distance.distance.value} <= ${
+          defines.Globals.options.fenceDistanceValue
+        }`
+      );
+      insideFence = true;
+    }
+  
+  
+    // Call updateDistanceResults
+    if (defines.Globals.options.updateDistanceCallBack) {
+      let updateDistanceResults={
+        curAddress: result.origin_address,
+        destAddress: result.destination_address,
+        mode: defines.Globals.locationSpecs.mode,
+        curDistance: result.distance.distance,
+        curDuration: result.distance.duration,
+        activateFenceOn:defines.Globals.options.activateFenceOn,
+        fenceDurationValue:defines.Globals.options.fenceDurationValue,
+        fenceDistanceValue:defines.Globals.options.fenceDistanceValue,
+        apiCalls: defines.Globals.counters.apiCalls,
+        insideFence: insideFence
+      }
+      defines.Globals.options.updateDistanceCallBack(updateDistanceResults);
+    }
+  
+    if (insideFence) {
+      log.info("We are inside the fence!".green);
+      if (defines.Globals.options.insideGeofenceCallBack) {
+        defines.Globals.options.insideGeofenceCallBack();
+      }
+      if (!defines.Globals.options.loopForever) {
+        stop("Ending geofencing.");
+      }
+    } else {
+      log.info("We are NOT inside the fence!".red);
+    }
   }
+  
   log.info(
     "-----------------------------------------------------------------------------"
   );
@@ -161,6 +165,9 @@ async function main() {
  */
 async function start() {
   log.info("Start geofencing...");
+  log.info(
+    "-----------------------------------------------------------------------------"
+  );
   defines.Globals.options.enable = true;
   await main();
 }

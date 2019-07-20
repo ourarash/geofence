@@ -9,6 +9,8 @@ Simple geofencing using Google or other geolocation providers's API
 - [x] Accepts callbacks for finding current location
 - [x] Accepts callbacks for when inside the fence
 
+![Output example](https://raw.githubusercontent.com/ourarash/geofence/master/screenshot.gif)
+
 # Installation
 
 Install with npm:
