@@ -74,6 +74,18 @@ async function updateDistance() {
     log.error("Error: ", error);
 
   }
+  
+  // Call updateDistanceResults
+  if (defines.Globals.options.updateDistanceCallBack) {
+    let updateDistanceResults={
+      curAddress: result.origin_address,
+      destAddress: result.destination_address,
+      mode: defines.Globals.locationSpecs.mode,
+      curDistance: result.distance.distance,
+      curDuration: result.distance.duration
+    }
+    defines.Globals.options.updateDistanceCallBack(updateDistanceResults);
+  }
 
   log.info("Cur address:", result.origin_address);
   log.info("Dest address:", result.destination_address);

@@ -51,11 +51,30 @@ async function insideGeofenceCallBack() {
     .run();
 }
 //-----------------------------------------------------------------------------
+/**
+ * Callback function to be called whenever the current location and distance
+ * is updated
+ * @param {Objecgt} updateDistanceResults
+ */
+async function updateDistanceCallBack(updateDistanceResults) {
+  let notificationText = `
+  curDistance: ${updateDistanceResults.curDistance},
+  curDuration: ${updateDistanceResults.curDuration}`;
+  api
+    .notification()
+    .content(notificationText)
+    .id(1)
+    .title("Geofencing")
+    //  .url('...')
+    .run();
+}
+//-----------------------------------------------------------------------------
 let options = {
   apiKey: "ENTER YOUR API HERE",
   updateInterval: 5,
   getCurrentLocation: getCurrentLocation,
   insideGeofenceCallBack: insideGeofenceCallBack,
+  updateDistanceCallBack: updateDistanceCallBack,
   loopForever: true,
 
   activateFenceOn: "duration", // 'duration', 'distance', 'either'

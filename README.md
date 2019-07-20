@@ -20,28 +20,35 @@ npm install geofence --save
 # Usage
 
 The current location and destination can be address or lat/long. See [Google's Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro)
+
 ```javascript
 
 let options = {
   // You can get it from here: https://cloud.google.com/maps-platform/
   apiKey: "ENTER YOUR API HERE", // Enter your own api key
   updateInterval: 5,  // Update current location (in seconds)
-  
+
   // API function to get the current location.
   // It should return a string that is an address or lat/long
-  getCurrentLocation: getCurrentLocation, 
-  insideGeofenceCallBack: insideGeofenceCallBack, // Callback for when we are inside the fence
+  getCurrentLocation: getCurrentLocation,
+
+  // Callback for when we are inside the fence
+  insideGeofenceCallBack: insideGeofenceCallBack,
+
+  // Callback function to be called whenever the current location and distance is updated
+  updateDistanceCallBack: updateDistanceCallBack
+
   loopForever: false,  // Stop/continue once we are inside the fence
 
   activateFenceOn: "duration", // 'duration', 'distance', 'either'
   fenceDurationValue: 25 * 60, // range of the fence in seconds
   fenceDistanceValue: 1000, // range of the fence in meter
-  
+
 };
 
 let locationSepc = {
   destination: "Oakland, CA", // Can be address or lat/long
-  mode: "driving" // 
+  mode: "driving" //
 };
 //-----------------------------------------------------------------------------
 var geofence = require("./index.js")(options, locationSepc);
@@ -50,6 +57,7 @@ geofence.start(options);
 ```
 
 # Example
+
 - See [examples/example.js](examples/example.js)
 - See [examples/cli.js](examples/cli.js) to run with command line arguments:
-    - `node cli.js --apiKey=YOUR_API_KEY --destination="San Francisco, CA"`
+  - `node cli.js --apiKey=YOUR_API_KEY --destination="San Francisco, CA"`
