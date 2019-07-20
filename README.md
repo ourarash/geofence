@@ -9,6 +9,12 @@ Simple geofencing using Google or other geolocation providers's API
 - [x] Accepts callbacks for finding current location
 - [x] Accepts callbacks for when inside the fence
 
+# Screenshot
+[examples/cli.js](examples/cli.js)
+```bash
+node cli.js --apiKey=$apiKey --destination="San Francisco, CA" --mode=driving --updateInterval=1 --fenceDurationValue=25
+```
+
 ![Output example](https://raw.githubusercontent.com/ourarash/geofence/master/screenshot.gif)
 
 # Installation
