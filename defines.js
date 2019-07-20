@@ -16,7 +16,7 @@ var Globals = {
     updateInterval: 5,
     fenceDurationValue: 25 * 60, //seconds
     fenceDistanceValue: 1000, //meter
-    activateFenceOn: "duration", // duration, distance, both
+    activateFenceOn: "duration", // 'duration', 'distance', 'either'
     loopForever: true,
     locationCacheTimeoutInMinutes: 10,
     // control

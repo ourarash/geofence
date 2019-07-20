@@ -4,7 +4,7 @@ Simple geofencing using Google or other geolocation providers's API
 
 [![NPM](https://badge.fury.io/js/geofence.svg)](https://www.npmjs.com/package/geofence)
 
-- [x] Check the current locations distance/duration againts the destination
+- [x] Check the current location's distance/duration againts the destination
 - [x] Caches the distances to reduce geolocation API calls
 - [x] Accepts callbacks for finding current location
 - [x] Accepts callbacks for when inside the fence
@@ -31,7 +31,12 @@ let options = {
   // It should return a string that is an address or lat/long
   getCurrentLocation: getCurrentLocation, 
   insideGeofenceCallBack: insideGeofenceCallBack, // Callback for when we are inside the fence
-  loopForever: false  // Stop/continue once we are inside the fence
+  loopForever: false,  // Stop/continue once we are inside the fence
+
+  activateFenceOn: "duration", // 'duration', 'distance', 'either'
+  fenceDurationValue: 25 * 60, // range of the fence in seconds
+  fenceDistanceValue: 1000, // range of the fence in meter
+  
 };
 
 let locationSepc = {

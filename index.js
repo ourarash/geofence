@@ -84,7 +84,7 @@ async function updateDistance() {
   let insideFence = false;
   if (
     result.distance.duration &&
-    ["duration", "both"].includes(defines.Globals.options.activateFenceOn) &&
+    ["duration", "both", "either"].includes(defines.Globals.options.activateFenceOn) &&
     result.distance.duration.value <= defines.Globals.options.fenceDurationValue
   ) {
     log.info(
@@ -98,7 +98,7 @@ async function updateDistance() {
 
   if (
     result.distance.distance &&
-    ["distance", "both"].includes(defines.Globals.options.activateFenceOn) &&
+    ["distance", "both", "either"].includes(defines.Globals.options.activateFenceOn) &&
     result.distance.distance.value <= defines.Globals.options.fenceDistanceValue
   ) {
     log.info(

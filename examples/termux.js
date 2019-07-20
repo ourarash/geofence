@@ -56,7 +56,12 @@ let options = {
   updateInterval: 5,
   getCurrentLocation: getCurrentLocation,
   insideGeofenceCallBack: insideGeofenceCallBack,
-  loopForever: false
+  loopForever: true,
+
+  activateFenceOn: "duration", // 'duration', 'distance', 'either'
+  fenceDurationValue: 25 * 60, // range of the fence in seconds
+  fenceDistanceValue: 1000, // range of the fence in meter
+  
 };
 
 let locationSepc = {
