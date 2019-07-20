@@ -1,6 +1,6 @@
 {
   "name": "geofence",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Geofencing for npm",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,9 @@
     "geofencing",
     "location",
     "distance",
-    "termux"
+    "termux",
+    "gps",
+    "geolocation"
   ],
   "author": "Ari Saif",
   "license": "ISC",

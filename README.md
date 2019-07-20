@@ -56,9 +56,10 @@ var geofence = require("./index.js")(options, locationSepc);
 geofence.start(options);
 ```
 
-# Example
+# Examples
 
 - [examples/example.js](examples/example.js)
 - [examples/cli.js](examples/cli.js) to run with command line arguments:
   - `node cli.js --apiKey=YOUR_API_KEY --destination="San Francisco, CA"`
-- [examples/termux.js](examples/termux.js) to run inside [Termux](https://termux.com/) on Android using GPS
+- [examples/termux.js](examples/termux.js) to run inside [Termux](https://termux.com/) on Android using GPS. Run with:
+  - `node termux.js --apiKey=YOUR_API_KEY --destination="320 Main St, Venice, CA" --fenceDurationValue=5 --updateInterval=10`
