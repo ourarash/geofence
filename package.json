@@ -1,0 +1,31 @@
+{
+  "name": "geofence",
+  "version": "1.0.0",
+  "description": "Geofencing for npm",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ourarash/geofence.git"
+  },
+  "keywords": [
+    "geofence",
+    "geofencing",
+    "location",
+    "distance"
+  ],
+  "author": "Ari Saif",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ourarash/geofence/issues"
+  },
+  "homepage": "https://github.com/ourarash/geofence#readme",
+  "dependencies": {
+    "@google/maps": "^0.5.5",
+    "ansicolor": "^1.1.92",
+    "moment": "^2.24.0",
+    "ololog": "^1.1.144"
+  }
+}
