@@ -2,17 +2,16 @@
  * Gets API key from command line
  */
 var defines = require("../defines");
-const mri = require('mri');
+const mri = require("mri");
 const api = require("termux");
 // const NodeGeocoder = require("node-geocoder");
 
 var log = defines.log;
 // var geocoder ;
 
-if(!api.hasTermux){
+if (!api.hasTermux) {
   log.error("Termux doesn't exits. Exit!");
 }
-
 
 //-----------------------------------------------------------------------------
 /**
@@ -35,20 +34,21 @@ async function getCurrentLocation() {
 
   // log.info('reverse: ', JSON.stringify(reverse, null, 2));
   // log.info('reverse[0].formattedAddress: ', JSON.stringify(reverse[0].formattedAddress));
-  
+
   return `${result.latitude},${result.longitude}`;
 }
-//----------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------
 /**
  * Our callback function once we get inside the fence
  */
-async function insideGeofenceCallBack(){
-  api.notification()
-   .content("We are inside the geofence!")
-   .id(1)
-   .title('Geofencing done')
-  //  .url('...')
-   .run()
+async function insideGeofenceCallBack() {
+  api
+    .notification()
+    .content("We are inside the geofence!")
+    .id(1)
+    .title("Geofencing done")
+    //  .url('...')
+    .run();
 }
 //-----------------------------------------------------------------------------
 let options = {
@@ -60,8 +60,7 @@ let options = {
 
   activateFenceOn: "duration", // 'duration', 'distance', 'either'
   fenceDurationValue: 25 * 60, // range of the fence in seconds
-  fenceDistanceValue: 1000, // range of the fence in meter
-  
+  fenceDistanceValue: 1000 // range of the fence in meter
 };
 
 let locationSepc = {
@@ -72,24 +71,27 @@ let locationSepc = {
 const argv = process.argv.slice(2);
 let cliArgs = mri(argv);
 
-[`apiKey`, `updateInterval`, `loopForever`].forEach(e=>{
-  if(cliArgs[e]){
+[
+  `apiKey`,
+  `updateInterval`,
+  `loopForever`,
+  `fenceDurationValue`,
+  `fenceDistanceValue`
+].forEach(e => {
+  if (cliArgs[e]) {
     options[e] = cliArgs[e];
     log.info(`${e}: ${options[e]}`);
   }
 });
 
-
-[`destination`, `mode`, `origin`].forEach(e=>{
-  if(cliArgs[e]){
+[`destination`, `mode`, `origin`].forEach(e => {
+  if (cliArgs[e]) {
     locationSepc[e] = cliArgs[e];
     log.info(`${e}: ${locationSepc[e]}`);
   }
 });
 
-
 // geocoder = NodeGeocoder(options);
-
 
 var geofence = require("../index.js")(options, locationSepc);
 
