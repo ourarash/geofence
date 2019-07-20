@@ -26,7 +26,7 @@ async function getCurrentLocation() {
     .request("last") // updates/last/once (default)
     .run();
 
-  log.info("current location result: ", JSON.stringify(result));
+  log.info("current location result: ", JSON.stringify(result, null, 2));
 
   // let reverse = await geocoder.reverse({lat:result.latitude, lon:result.longitude})
   // .catch(function(err) {
@@ -67,10 +67,18 @@ let locationSepc = {
 const argv = process.argv.slice(2);
 let cliArgs = mri(argv);
 
-[`apiKey`, `updateInterval`, `loopForever`, `destination`].forEach(e=>{
+[`apiKey`, `updateInterval`, `loopForever`].forEach(e=>{
   if(cliArgs[e]){
     options[e] = cliArgs[e];
     log.info(`${e}: ${options[e]}`);
+  }
+});
+
+
+[`destination`, `mode`, `origin`].forEach(e=>{
+  if(cliArgs[e]){
+    locationSepc[e] = cliArgs[e];
+    log.info(`${e}: ${locationSepc[e]}`);
   }
 });
 
