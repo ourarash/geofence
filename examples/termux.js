@@ -52,8 +52,8 @@ async function insideGeofenceCallBack() {
  */
 async function updateDistanceCallBack(updateDistanceResults) {
   let notificationTitle = `
-  curDis.: ${updateDistanceResults.curDistance.text},
-  curDur.: ${updateDistanceResults.curDuration.text},
+  curDist: ${updateDistanceResults.curDistance.text},
+  curDur: ${updateDistanceResults.curDuration.text},
   inside: ${updateDistanceResults.insideFence}`;
 
   let notificationText = `Activates on:
