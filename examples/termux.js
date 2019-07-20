@@ -58,8 +58,8 @@ async function insideGeofenceCallBack() {
  */
 async function updateDistanceCallBack(updateDistanceResults) {
   let notificationText = `
-  curDistance: ${updateDistanceResults.curDistance},
-  curDuration: ${updateDistanceResults.curDuration}`;
+  curDistance: ${updateDistanceResults.curDistance.text},
+  curDuration: ${updateDistanceResults.curDuration.text}`;
   api
     .notification()
     .content(notificationText)
