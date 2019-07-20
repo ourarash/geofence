@@ -1,5 +1,5 @@
 /**
- * Should be run inside [Termux](https://termux.com/) in Android
+ * Should be run inside [Termux](https://termux.com/) in Android using GPS
  * First install the following apps: 
  *  - https://play.google.com/store/apps/details?id=com.termux
  *  - https://play.google.com/store/apps/details?id=com.termux.api
