@@ -28,6 +28,7 @@
   "dependencies": {
     "@google/maps": "^0.5.5",
     "ansicolor": "^1.1.92",
+    "geolib": "^3.0.4",
     "moment": "^2.24.0",
     "mri": "^1.1.4",
     "ololog": "^1.1.144",

@@ -2,6 +2,7 @@ var defines = require("./defines");
 const moment = require("moment");
 var log = defines.log;
 var googleMapsClient;
+const geolib = require('geolib');
 
 //-----------------------------------------------------------------------------
 /**
@@ -42,7 +43,7 @@ async function updateDistance() {
   let result;
   try {
     curLocation = await defines.Globals.options.getCurrentLocation();
-
+    console.log('curLocation: ', JSON.stringify(curLocation));
     let now = moment().valueOf();
     let minutesBeforeNow =
       now -
@@ -57,6 +58,10 @@ async function updateDistance() {
       result = defines.cache.distance[curLocation].value;
       log.info("Used cache!".green);
     } else {
+      // First calculate the bird-fly-distance without Google API
+      // let birdDistance = getDistance(defines.cache.distance[curLocation].value, 
+      //   end, accuracy = 1)
+
       // Call google API
       result = await getDistance(
         curLocation,

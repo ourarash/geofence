@@ -183,6 +183,14 @@ async function init() {
         message: "Value should only be characters",
         default: "driving",
         required: true
+      },
+      loopForever: {
+        description: "Keep the geofence active once getting inside the fence?",
+        type: "boolean",
+        pattern: /\b(true|false)\b/,
+        message: "Value should be Boolean",
+        default: true,
+        required: true
       }
     }
   };
@@ -191,7 +199,7 @@ async function init() {
 
   let result = await promptGet(schema);
 
-  log("Command-line input received:");
+  log.info("Command-line input received:");
   optionKeys.forEach(e => {
     if (result[e]) {
       options[e] = result[e];
