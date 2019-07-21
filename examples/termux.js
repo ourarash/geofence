@@ -41,18 +41,16 @@ async function insideGeofenceCallBack() {
   api
     .notification()
     .content("We are inside the geofence!")
-    .id(g_notification_id)
+    .id(g_notification_id + 1)
     .title("Geofencing done")
     //  .url('...')
     .run();
 }
 //-----------------------------------------------------------------------------
 /**
- * Callback function to be called whenever the current location and distance
- * is updated
- * @param {Objecgt} updateDistanceResults
+ * @returns {object}
  */
-async function updateDistanceCallBack(updateDistanceResults) {
+function buildNotification() {
   let notificationTitle = `
   curDist: ${updateDistanceResults.curDistance.text},
   curDur: ${updateDistanceResults.curDuration.text},
@@ -63,12 +61,25 @@ async function updateDistanceCallBack(updateDistanceResults) {
   duration:${updateDistanceResults.fenceDurationValue},
   distance:${updateDistanceResults.fenceDistanceValue}
   `;
+  return {
+    title: notificationTitle,
+    text: notificationText
+  };
+}
+//-----------------------------------------------------------------------------
+/**
+ * Callback function to be called whenever the current location and distance
+ * is updated
+ * @param {Object} updateDistanceResults
+ */
+async function updateDistanceCallBack(updateDistanceResults) {
+  let notification = buildNotification();
 
   api
     .notification()
-    .content(notificationText)
-    .id(1)
-    .title(notificationTitle)
+    .content(notification.text)
+    .id(g_notification_id)
+    .title(notification.title)
     //  .url('...')
     .run();
 }
