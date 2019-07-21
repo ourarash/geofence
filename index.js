@@ -69,8 +69,7 @@ async function updateDistance() {
         defines.Globals.locationSpecs.mode
       );
 
-      console.log("result: ", JSON.stringify(result));
-      // Update cashe
+      // Update cache
       defines.cache.distance[curLocation] = {
         value: result,
         timestamp: now
@@ -167,6 +166,7 @@ async function updateDistance() {
  * there is no point in calling the API.
  * Similarly, if the bird-fly-distance is much lower than the fence range,
  * we already know that we are inside the fence.
+ * THIS FUNCTION IS NOT COMPLETE YET!
  * @param {String} curLocation
  * @returns {boolean}
  */
