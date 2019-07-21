@@ -2,7 +2,8 @@ var defines = require("./defines");
 const moment = require("moment");
 var log = defines.log;
 var googleMapsClient;
-const geolib = require('geolib');
+const geolib = require("geolib");
+var utility_functions = require("./utility");
 
 //-----------------------------------------------------------------------------
 /**
@@ -22,6 +23,7 @@ async function getDistance(origin, destination, mode) {
       })
       .asPromise();
 
+    console.log("response: ", JSON.stringify(response, null, 2));
     result = {
       distance: response.json.rows[0].elements[0],
       origin_address: response.json.origin_addresses[0],
@@ -43,7 +45,7 @@ async function updateDistance() {
   let result;
   try {
     curLocation = await defines.Globals.options.getCurrentLocation();
-    console.log('curLocation: ', JSON.stringify(curLocation));
+
     let now = moment().valueOf();
     let minutesBeforeNow =
       now -
@@ -59,8 +61,7 @@ async function updateDistance() {
       log.info("Used cache!".green);
     } else {
       // First calculate the bird-fly-distance without Google API
-      // let birdDistance = getDistance(defines.cache.distance[curLocation].value, 
-      //   end, accuracy = 1)
+      // let shouldCallAPI = shouldCallAPIBasedOnDirectFlyDistance(curLocation);
 
       // Call google API
       result = await getDistance(
@@ -69,6 +70,7 @@ async function updateDistance() {
         defines.Globals.locationSpecs.mode
       );
 
+      console.log("result: ", JSON.stringify(result));
       // Update cashe
       defines.cache.distance[curLocation] = {
         value: result,
@@ -77,11 +79,9 @@ async function updateDistance() {
     }
   } catch (error) {
     log.error("Error: ", error);
-
   }
-  
-  
-  if(!result.distance.distance){
+
+  if (!result.distance.distance) {
     log.error("Distance was not found: ", `curLocation: ${curLocation}`);
   } else {
     log.info("Cur address:", result.origin_address.blue);
@@ -90,12 +90,15 @@ async function updateDistance() {
     log.info("cur distance: ", JSON.stringify(result.distance.distance.text));
     log.info("cur duration: ", JSON.stringify(result.distance.duration.text));
     log.info("apiCalls: ", defines.Globals.counters.apiCalls);
-  
+
     let insideFence = false;
     if (
       result.distance.duration &&
-      ["duration", "both", "either"].includes(defines.Globals.options.activateFenceOn) &&
-      result.distance.duration.value <= defines.Globals.options.fenceDurationValue
+      ["duration", "both", "either"].includes(
+        defines.Globals.options.activateFenceOn
+      ) &&
+      result.distance.duration.value <=
+        defines.Globals.options.fenceDurationValue
     ) {
       log.info(
         "Inside the fence based on duration: ",
@@ -105,11 +108,14 @@ async function updateDistance() {
       );
       insideFence = true;
     }
-  
+
     if (
       result.distance.distance &&
-      ["distance", "both", "either"].includes(defines.Globals.options.activateFenceOn) &&
-      result.distance.distance.value <= defines.Globals.options.fenceDistanceValue
+      ["distance", "both", "either"].includes(
+        defines.Globals.options.activateFenceOn
+      ) &&
+      result.distance.distance.value <=
+        defines.Globals.options.fenceDistanceValue
     ) {
       log.info(
         "Inside fence based on distance: ",
@@ -119,25 +125,24 @@ async function updateDistance() {
       );
       insideFence = true;
     }
-  
-  
+
     // Call updateDistanceResults
     if (defines.Globals.options.updateDistanceCallBack) {
-      let updateDistanceResults={
+      let updateDistanceResults = {
         curAddress: result.origin_address,
         destAddress: result.destination_address,
         mode: defines.Globals.locationSpecs.mode,
         curDistance: result.distance.distance,
         curDuration: result.distance.duration,
-        activateFenceOn:defines.Globals.options.activateFenceOn,
-        fenceDurationValue:defines.Globals.options.fenceDurationValue,
-        fenceDistanceValue:defines.Globals.options.fenceDistanceValue,
+        activateFenceOn: defines.Globals.options.activateFenceOn,
+        fenceDurationValue: defines.Globals.options.fenceDurationValue,
+        fenceDistanceValue: defines.Globals.options.fenceDistanceValue,
         apiCalls: defines.Globals.counters.apiCalls,
         insideFence: insideFence
-      }
+      };
       defines.Globals.options.updateDistanceCallBack(updateDistanceResults);
     }
-  
+
     if (insideFence) {
       log.info("We are inside the fence!".green);
       if (defines.Globals.options.insideGeofenceCallBack) {
@@ -150,13 +155,61 @@ async function updateDistance() {
       log.info("We are NOT inside the fence!".red);
     }
   }
-  
+
   log.info(
     "-----------------------------------------------------------------------------"
   );
 }
 //-----------------------------------------------------------------------------
+/**
+ * Using the bird-fly-distance, decides if we should call distance API.
+ * This is based on the fact that if the bird-fly-distance is much higher than 
+ * the fence range, We already know that we are outside the fence, and
+ * there is no point in calling the API.
+ * Similarly, if the bird-fly-distance is much lower than the fence range,
+ * we already know that we are inside the fence.
+ * @param {String} curLocation
+ * @returns {boolean}
+ */
+function shouldCallAPIBasedOnDirectFlyDistance(curLocation) {
+  let result = true;
+  if (defines.Globals.options.useBirdFlyDistanceOptimization) {
+    let latLong = utility_functions.getLatLong(curLocation);
+    if (latLong) {
+      let birdDistance = geolib.getDistance(
+        latLong,
+        defines.Globals.options.destLatLong,
+        (accuracy = 1)
+      );
+      console.log("birdDistance: ", JSON.stringify(birdDistance));
+    }
+  }
+  return result;
+}
+
+//-----------------------------------------------------------------------------
 async function main() {
+  if (defines.Globals.options.useBirdFlyDistanceOptimization) {
+    log.info("Geocoding the destination...");
+    let geocode = await googleMapsClient
+      .geocode({
+        address: defines.Globals.locationSpecs.destination
+      })
+      .asPromise();
+
+    defines.Globals.counters.apiCalls++;
+
+    defines.Globals.internal.detinationGeocode = geocode;
+
+    if (
+      utility_functions.validChain(geocode, "json", "results") &&
+      geocode.json.results[0].geometry
+    ) {
+      defines.Globals.options.destLatLong =
+        geocode.json.results[0].geometry.location;
+    }
+  }
+
   defines.Globals.intervals.aggregatePriceInterval = setInterval(() => {
     if (defines.Globals.options.enable) {
       updateDistance();

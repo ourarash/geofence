@@ -100,6 +100,21 @@ function hashCode(stringValue) {
   return hash;
 }
 //-----------------------------------------------------------------------------
+/**
+ * 
+ * @param {String} locationString 
+ * @returns {object}
+ */
+function getLatLong(locationString) {
+  let valueArr = locationString.split(",");
+  let result={};
+  if (valueArr && valueArr.length == 2) {
+    result["lat"] = Number(valueArr[0]);
+    result["lng"] = Number(valueArr[1]);
+  }
+  return result;
+}
+//-----------------------------------------------------------------------------
 
 var exports = (module.exports = {
   validChain: validChain,
@@ -108,5 +123,6 @@ var exports = (module.exports = {
   removeUndefinedFromObject: removeUndefinedFromObject,
   sleep: sleep,
   formatNumber: formatNumber,
-  hashCode: hashCode
+  hashCode: hashCode,
+  getLatLong: getLatLong
 });

@@ -20,6 +20,7 @@ var Globals = {
     activateFenceOn: "duration", // 'duration', 'distance', 'either'
     loopForever: true,
     locationCacheTimeoutInMinutes: 10,
+    useBirdFlyDistanceOptimization: true,
     // control
     enable: true // Used for start/stop
   },
@@ -37,6 +38,9 @@ var Globals = {
   },
   counters:{
     apiCalls: 0
+  },
+  internal:{
+    detinationGeocode: {}
   }
 };
 
