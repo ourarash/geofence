@@ -87,6 +87,9 @@ async function updateDistance() {
     log.info("cur duration: ", JSON.stringify(result.distance.duration.text));
     log.info("apiCalls: ", defines.Globals.counters.apiCalls);
   
+    log.debug("result.distance: ", JSON.stringify(result.distance));
+    log.debug("defines.Globals.options.activateFenceOn: ", defines.Globals.options.activateFenceOn);
+
     let insideFence = false;
     if (
       result.distance.duration &&

@@ -3,6 +3,7 @@
 Simple geofencing using Google or other geolocation providers's API
 
 [![NPM](https://badge.fury.io/js/geofence.svg)](https://www.npmjs.com/package/geofence)
+[![NPM Downloads][downloadst-image]][downloads-url]
 
 - [x] Check the current location's distance/duration againts the destination
 - [x] Caches the distances to reduce geolocation API calls
@@ -73,3 +74,8 @@ geofence.start(options);
   - `node cli.js --apiKey=YOUR_API_KEY --destination="San Francisco, CA"`
 - [examples/termux.js](examples/termux.js): demonstrates running inside [Termux](https://termux.com/) and [Termux-API](https://play.google.com/store/apps/details?id=com.termux.api) on Android using device GPS and system notifications. Run with:
   - `node termux.js --apiKey=YOUR_API_KEY --destination="320 Main St, Venice, CA" --fenceDurationValue=5 --updateInterval=10`
+
+
+[downloads-image]: https://img.shields.io/npm/dm/geofence.svg
+[downloadst-image]: https://img.shields.io/npm/dt/geofence.svg
+[downloads-url]: https://npmjs.org/package/geofence
