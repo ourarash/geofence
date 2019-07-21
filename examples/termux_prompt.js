@@ -141,7 +141,7 @@ async function init() {
         type: "string",
         pattern: /\b(duration|distance|either)\b/,
         message: "Value should only be duration|distance|either",
-        // default: 10,
+        default: 'duration',
         required: true
       },
       updateInterval: {
