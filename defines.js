@@ -1,7 +1,8 @@
 require("ansicolor").nice;
 
 const log = require("ololog").configure({
-  time: { yes: true, print: x => x.toLocaleString().bright.cyan + " " },
+  // time: { yes: true, print: x => x.toLocaleString().bright.cyan + " " },
+  time: {yes: false},
   locate: false,
   tag: true
 });
