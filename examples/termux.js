@@ -50,7 +50,7 @@ async function insideGeofenceCallBack() {
 /**
  * @returns {object}
  */
-function buildNotification() {
+function buildNotification(updateDistanceResults) {
   let notificationTitle = `
   curDist: ${updateDistanceResults.curDistance.text},
   curDur: ${updateDistanceResults.curDuration.text},
@@ -73,7 +73,7 @@ function buildNotification() {
  * @param {Object} updateDistanceResults
  */
 async function updateDistanceCallBack(updateDistanceResults) {
-  let notification = buildNotification();
+  let notification = buildNotification(updateDistanceResults);
 
   api
     .notification()
