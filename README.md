@@ -74,6 +74,8 @@ geofence.start(options);
   - `node cli.js --apiKey=YOUR_API_KEY --destination="San Francisco, CA"`
 - [examples/termux.js](examples/termux.js): demonstrates running inside [Termux](https://termux.com/) and [Termux-API](https://play.google.com/store/apps/details?id=com.termux.api) on Android using device GPS and system notifications. Run with:
   - `node termux.js --apiKey=YOUR_API_KEY --destination="320 Main St, Venice, CA" --fenceDurationValue=300 --updateInterval=10`
+  - [examples/termux_prompt.js](examples/termux_prompt.js): demonstrates running inside [Termux](https://termux.com/) and [Termux-API](https://play.google.com/store/apps/details?id=com.termux.api) on Android using device GPS and system notifications. It receives the inputs from command prompt:
+  - `node termux_prompt.js`
 
 
 [downloads-image]: https://img.shields.io/npm/dm/geofence.svg
