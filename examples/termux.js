@@ -8,12 +8,14 @@
 var defines = require("../defines");
 const mri = require("mri");
 const api = require("termux");
+var utility_functions = require("../utility");
 
 var log = defines.log;
 
 if (!api.hasTermux) {
   log.error("Termux doesn't exits. Exit!");
 }
+var g_notification_id = 1;
 
 //-----------------------------------------------------------------------------
 /**
@@ -39,7 +41,7 @@ async function insideGeofenceCallBack() {
   api
     .notification()
     .content("We are inside the geofence!")
-    .id(1)
+    .id(g_notification_id)
     .title("Geofencing done")
     //  .url('...')
     .run();
@@ -88,30 +90,32 @@ let locationSepc = {
   destination: "Oakland, CA"
 };
 //-----------------------------------------------------------------------------
-
 const argv = process.argv.slice(2);
 let cliArgs = mri(argv);
-
-[
+let optionKeys = [
   `apiKey`,
   `updateInterval`,
   `loopForever`,
   `fenceDurationValue`,
   `fenceDistanceValue`
-].forEach(e => {
+];
+
+let locationSepcKeys = [`destination`, `mode`, `origin`];
+optionKeys.forEach(e => {
   if (cliArgs[e]) {
     options[e] = cliArgs[e];
     log.info(`${e}: ${options[e]}`);
   }
 });
 
-[`destination`, `mode`, `origin`].forEach(e => {
+locationSepcKeys.forEach(e => {
   if (cliArgs[e]) {
     locationSepc[e] = cliArgs[e];
     log.info(`${e}: ${locationSepc[e]}`);
   }
 });
 
+g_notification_id = utility_functions.hashCode(locationSepc.destination);
 var geofence = require("../index.js")(options, locationSepc);
 
 geofence.start(options);

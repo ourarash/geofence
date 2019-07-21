@@ -1,4 +1,3 @@
-var utility_functions = require("./utility");
 var defines = require("./defines");
 const moment = require("moment");
 var log = defines.log;

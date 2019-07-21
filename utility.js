@@ -82,6 +82,24 @@ function formatNumber(n, decimalNumbers = 4) {
   return parseFloat(n.toFixed(decimalNumbers));
 }
 //-----------------------------------------------------------------------------
+/**
+ * Hashes a string to a number
+ * https://stackoverflow.com/a/7616484/1383356
+ * @param {String} stringValue
+ * @returns {number}
+ */
+function hashCode(stringValue) {
+  var hash = 0;
+  stringValue = stringValue || "Utility";
+  if (stringValue.length == 0) return hash;
+  for (let i = 0; i < stringValue.length; i++) {
+    let c = stringValue.charCodeAt(i);
+    hash = (hash << 5) - hash + c;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash;
+}
+//-----------------------------------------------------------------------------
 
 var exports = (module.exports = {
   validChain: validChain,
@@ -90,4 +108,5 @@ var exports = (module.exports = {
   removeUndefinedFromObject: removeUndefinedFromObject,
   sleep: sleep,
   formatNumber: formatNumber,
+  hashCode: hashCode
 });
