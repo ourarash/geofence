@@ -109,6 +109,7 @@ let locationSepc = {
 async function init() {
   let optionKeys = [
     `apiKey`,
+    `activateFenceOn`,
     `updateInterval`,
     `loopForever`,
     `fenceDurationValue`,
@@ -133,6 +134,14 @@ async function init() {
         // pattern: /[a-zA-Z0-9_]+$/,
         // message: "Value should only be alphanumberical",
         default: "340 Main Street, Venice, CA, USA",
+        required: true
+      },
+      activateFenceOn: {
+        description: "Fence on 'duration' or 'distance' or 'either'?",
+        type: "string",
+        pattern: /\b(duration|distance|either)\b/,
+        message: "Value should only be duration|distance|either",
+        // default: 10,
         required: true
       },
       updateInterval: {
