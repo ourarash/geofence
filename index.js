@@ -23,7 +23,6 @@ async function getDistance(origin, destination, mode) {
       })
       .asPromise();
 
-    console.log("response: ", JSON.stringify(response, null, 2));
     result = {
       distance: response.json.rows[0].elements[0],
       origin_address: response.json.origin_addresses[0],
@@ -163,7 +162,7 @@ async function updateDistance() {
 //-----------------------------------------------------------------------------
 /**
  * Using the bird-fly-distance, decides if we should call distance API.
- * This is based on the fact that if the bird-fly-distance is much higher than 
+ * This is based on the fact that if the bird-fly-distance is much higher than
  * the fence range, We already know that we are outside the fence, and
  * there is no point in calling the API.
  * Similarly, if the bird-fly-distance is much lower than the fence range,
@@ -207,6 +206,10 @@ async function main() {
     ) {
       defines.Globals.options.destLatLong =
         geocode.json.results[0].geometry.location;
+      log.info(
+        "Destination Geocode: ",
+        JSON.stringify(geocode.json.results[0].geometry.location)
+      );
     }
   }
 
