@@ -57,7 +57,7 @@ function buildNotification(updateDistanceResults) {
   let notificationTitle = `
   curDist: ${updateDistanceResults.curDistance.text},
   curDur: ${updateDistanceResults.curDuration.text},
-  inside: ${updateDistanceResults.insideFence}`;
+  in: ${updateDistanceResults.insideFence}`;
 
   let notificationText = `Activates on:
   ${updateDistanceResults.activateFenceOn},
