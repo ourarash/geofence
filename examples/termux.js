@@ -17,7 +17,7 @@ if (!api.hasTermux) {
   log.error("Termux doesn't exits. Exit!");
 }
 var g_notification_id = 1;
-let g_notification = buildNotification(updateDistanceResults);
+let g_notification ;
 //-----------------------------------------------------------------------------
 /**
  * A function that mocks the current location
