@@ -21,6 +21,8 @@ var Globals = {
     loopForever: true,
     locationCacheTimeoutInMinutes: 10,
     useBirdFlyDistanceOptimization: true,
+    insideGeofenceCallBack: null,
+    updateDistanceCallBack: null,
     // control
     enable: true // Used for start/stop
   },

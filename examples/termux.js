@@ -9,6 +9,7 @@ var defines = require("../defines");
 const mri = require("mri");
 const api = require("termux");
 var utility_functions = require("../utility");
+const spinners = Object.assign({}, require("./spinners.json"));
 
 var log = defines.log;
 
@@ -16,7 +17,7 @@ if (!api.hasTermux) {
   log.error("Termux doesn't exits. Exit!");
 }
 var g_notification_id = 1;
-
+let g_notification = buildNotification(updateDistanceResults);
 //-----------------------------------------------------------------------------
 /**
  * A function that mocks the current location
@@ -73,13 +74,21 @@ function buildNotification(updateDistanceResults) {
  * @param {Object} updateDistanceResults
  */
 async function updateDistanceCallBack(updateDistanceResults) {
-  let notification = buildNotification(updateDistanceResults);
+  g_notification = buildNotification(updateDistanceResults);
+}
+//-----------------------------------------------------------------------------
+async function updateNotification() {
+  g_updateCounter++;
+
+  let frames = spinners.moon.frames;
 
   api
     .notification()
-    .content(notification.text)
+    .content(g_notification.text)
     .id(g_notification_id)
-    .title(notification.title)
+    .title(
+      frames[g_updateCounter % frames.length].toString() + notification.title
+    )
     //  .url('...')
     .run();
 }
@@ -130,3 +139,7 @@ g_notification_id = utility_functions.hashCode(locationSepc.destination);
 var geofence = require("../index.js")(options, locationSepc);
 
 geofence.start(options);
+
+setInterval(() => {
+  updateNotification();
+}, 1 * 1000);
