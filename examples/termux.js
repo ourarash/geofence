@@ -89,7 +89,7 @@ async function updateNotification() {
     .content(g_notification.text)
     .id(g_notification_id)
     .title(
-      frames[g_updateCounter % frames.length].toString() + notification.title
+      frames[g_updateCounter % frames.length].toString() + g_notification.title
     )
     //  .url('...')
     .run();
