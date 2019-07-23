@@ -17,8 +17,8 @@ if (!api.hasTermux) {
   log.error("Termux doesn't exits. Exit!");
 }
 var g_notification_id = 1;
-let g_notification ;
-var g_updateCounter = 0 ;
+let g_notification = { title: "Geofencing...", text: "Please Wait..." };
+var g_updateCounter = 0;
 
 //-----------------------------------------------------------------------------
 /**
