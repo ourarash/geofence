@@ -18,6 +18,8 @@ if (!api.hasTermux) {
 }
 var g_notification_id = 1;
 let g_notification ;
+var g_updateCounter = 0 ;
+
 //-----------------------------------------------------------------------------
 /**
  * A function that mocks the current location
